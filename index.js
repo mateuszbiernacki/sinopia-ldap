@@ -55,9 +55,9 @@ Auth.prototype.authenticate = function(user, password, callback) {
         }
         for (var i = 0; i < ldap_user.memberOf.length; i++) {
           self._logger.warn({
-             err: String(ldap_user.memberOf[i]).match(/CN=([^,]+)/)
+             err: String(ldap_user.memberOf[i]).match(/CN=([^,]+)/)[1]
             }, '=================================================================LDAP error on close @{err}')
-          groups.push("%" + parseDN(ldap_user.memberOf[i]).rdns[0][self._config.groupNameAttribute])
+          groups.push("%" + String(ldap_user.memberOf[i]).match(/CN=([^,]+)/)[1])
         }
       }
     }
