@@ -54,6 +54,9 @@ Auth.prototype.authenticate = function(user, password, callback) {
           ldap_user.memberOf = [ ldap_user.memberOf ]
         }
         for (var i = 0; i < ldap_user.memberOf.length; i++) {
+          self._logger.warn({
+             err: parseDN(ldap_user.memberOf[i])
+            }, 'LDAP error on close @{err}')
           groups.push("%" + parseDN(ldap_user.memberOf[i]).rdns[0][self._config.groupNameAttribute])
         }
       }
